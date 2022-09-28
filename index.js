@@ -1,4 +1,6 @@
 const argv = require("yargs").argv;
+const yargs = require("yargs");
+const { hideBin } = require("yargs/helpers");
 const logger = require("./db/contacts");
 
 const invokeAction = async ({ action, id, name, email, phone }) => {
@@ -19,13 +21,19 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
       break;
 
     case "remove":
-      // ... id
+      const removeContacts = await logger.removeContact(id);
+      console.log(removeContacts);
       break;
 
     default:
       console.warn("\x1B[31m Unknown action type!");
   }
 };
+
+// const arr = hideBin(process.argv);
+// const { argv } = yargs(arr);
+// console.log(argv);
+invokeAction(argv);
 
 // invokeAction({ action: "list" });
 // invokeAction({ action: "get", id: "4" });
@@ -34,4 +42,8 @@ const invokeAction = async ({ action, id, name, email, phone }) => {
 //   name: "Bern",
 //   email: "Bern@gmail.net",
 //   phone: "(692) 999-9999",
+// });
+// invokeAction({
+//   action: "remove",
+//   id: "77",
 // });

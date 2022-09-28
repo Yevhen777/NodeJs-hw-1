@@ -32,9 +32,18 @@ const addContact = async (contacts) => {
   return newContact;
 };
 
-function removeContact(contactId) {
-  // ...твой код
-}
+const removeContact = async (id) => {
+  const removeContact = await listContacts();
+  const index = removeContact.findIndex(
+    (item) => Number(item.id) === Number(id)
+  );
+  if (index === -1) {
+    return null;
+  }
+  const [result] = removeContact.splice(index, 1);
+  await fs.writeFile(path, JSON.stringify(removeContact, null, 2));
+  return result;
+};
 
 module.exports = {
   listContacts,
